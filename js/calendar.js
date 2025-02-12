@@ -93,10 +93,32 @@ async function getLocalTips() {
     }
 }
 
+// 获取 URL 中的 'name' 参数
+function getURLParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search); // 获取URL参数
+    return urlParams.get(name); // 返回对应参数的值
+}
+
+// 根据参数动态更新页面内容
+function updatePageContent() {
+    const name = getURLParameter("name"); // 获取 'name' 参数的值
+
+    // 检查页面上是否有id为 'name' 的元素
+    const nameElement = document.getElementById("name");
+
+    if (name && nameElement) {
+        nameElement.innerText = name + "'"; // 将获取到的 'name' 参数值插入到 id="name" 的标签中，并加上单引号
+    } else if (nameElement) {
+        nameElement.innerText = "Kailous'"; // 如果没有参数，显示默认值，并加上单引号
+    }
+}
+
 // 你可以在需要的时候调用函数更新页面
 document.addEventListener("DOMContentLoaded", function () {
     // 在页面加载时触发日期更新
     updateDate();
     // 在页面加载时触发每日一句刷新
-    getLocalTips()
+    getLocalTips();
+    // 自定义名称
+    updatePageContent();
 });
